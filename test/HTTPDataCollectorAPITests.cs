@@ -1,5 +1,7 @@
 using Xunit;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HTTPDataCollectorAPI.Test
 {
@@ -11,22 +13,22 @@ namespace HTTPDataCollectorAPI.Test
             public List<string> MyListAttribute{get;set;}
         }
         [Fact]
-        public void SendingValidPayload()
+        public async Task SendingValidPayload()
         {
-            var collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}","{Your_Workspace_Key}");
-            collector.Collect("Test", "{'test':'a'}");
+            var collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}", "{Your_Workspace_Key}");
+            await collector.Collect("TestLogType", "{\"TestAttribute\":\"TestValue\"}");
         }        
 
         [Fact]
-        public void SendingValidObject()
+        public async Task SendingValidObject()
         {
             var anObject = new MySerializableClass(){
                 MyIntAttribute = 4,
                 MyStringAttribute = "hello",
                 MyListAttribute = new List<string>(){"one","two"}
             };
-            var collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}","{Your_Workspace_Key}");
-            collector.Collect("Test", anObject);
+            var collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}", "{Your_Workspace_Key}");
+            await collector.Collect("TestLogType", anObject);
         }   
     }
 }
