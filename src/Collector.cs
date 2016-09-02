@@ -48,6 +48,16 @@ namespace HTTPDataCollectorAPI
         /// Collect a JSON log to Azure Log Analytics
         /// </summary>
         /// <param name="LogType">Name of the Type of Log. Can be any name you want to appear on Azure Log Analytics.</param>
+        /// <param name="ObjectToSerialize">Object to serialize and collect.</param>
+        /// <param name="ApiVersion">Optional. Api Version.</param>
+        public async Task Collect(string LogType, object ObjectToSerialize, string ApiVersion="2016-04-01")
+        {
+            await Collect(LogType, Newtonsoft.Json.JsonConvert.SerializeObject(ObjectToSerialize), ApiVersion);
+        }
+        /// <summary>
+        /// Collect a JSON log to Azure Log Analytics
+        /// </summary>
+        /// <param name="LogType">Name of the Type of Log. Can be any name you want to appear on Azure Log Analytics.</param>
         /// <param name="JsonPayload">JSON string. Can be an array or single object.</param>
         /// <param name="ApiVersion">Optional. Api Version.</param>
         public async Task Collect(string LogType, string JsonPayload, string ApiVersion="2016-04-01")
