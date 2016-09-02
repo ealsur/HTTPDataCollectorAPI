@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace HTTPDataCollectorAPI
 {
+    /// <summary>
+    /// HTTP Data Collector API wrapper
+    /// </summary>
     public class Collector : ICollector
     {
         private string _WorkspaceId;
