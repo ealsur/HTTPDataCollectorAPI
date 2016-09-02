@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>HTTPDataCollectorAPICollector</id>
+    <version>$version$</version>
+    <authors>ealsur</authors>
+    <owners>ealsur</owners>
+    <licenseUrl>https://github.com/ealsur/HTTPDataCollectorAPI/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ealsur/HTTPDataCollectorAPI</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Azure Log Analytics HTTP Data Collector API wrapper</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2016. Ealsur.</copyright>
+    <tags>azure log analytics</tags>
+  </metadata>
+</package>
