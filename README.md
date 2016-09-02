@@ -39,7 +39,7 @@ If you are using a Depedency Injection mechanism (or ASP.NET Core) you can use t
     
 ## Issues
 
-Please feel free to [report any issues](./issues) you might encounter. Keep in mind that this library won't assure that your JSON payloads are being indexed, it will make sure that the HTTP Data Collection API [responds an Accept](https://azure.microsoft.com/en-us/documentation/articles/log-analytics-data-collector-api/#return-codes) but there is no way (right now) to know when has the payload been indexed completely. 
+Please feel free to [report any issues](https://github.com/ealsur/HTTPDataCollectorAPI/issues) you might encounter. Keep in mind that this library won't assure that your JSON payloads are being indexed, it will make sure that the HTTP Data Collection API [responds an Accept](https://azure.microsoft.com/en-us/documentation/articles/log-analytics-data-collector-api/#return-codes) but there is no way (right now) to know when has the payload been indexed completely. 
 
 ## Supported Frameworks
 
