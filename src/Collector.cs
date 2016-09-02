@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HTTPDataCollectorAPI
 {
-    public class Collector
+    public class Collector : ICollector
     {
         private string _WorkspaceId;
         private string _SharedKey;
