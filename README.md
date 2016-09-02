@@ -34,7 +34,7 @@ If you are using a Depedency Injection mechanism (or ASP.NET Core) you can use t
     public void ConfigureServices(IServiceCollection services)
     {
       //... some other code
-      services.AddScoped<HTTPDataCollectorAPI.ICollector, HTTPDataCollectorAPI.Collector>();
+      services.AddSingleton<HTTPDataCollectorAPI.ICollector, HTTPDataCollectorAPI.Collector>();
     }
     
 ## Issues
