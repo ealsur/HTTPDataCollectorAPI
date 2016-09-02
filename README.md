@@ -8,7 +8,7 @@ This package is a .Net adaptation of the Powershell code for implementing the HT
 
 You can obtain this project as a [Nuget Package](https://www.nuget.org/packages/HTTPDataCollectorAPI). 
 
-`Install-Package HTTPDataCollectorAPI
+    Install-Package HTTPDataCollectorAPI
 
 Or reference it and use it according to the [License](./LICENSE).
 
