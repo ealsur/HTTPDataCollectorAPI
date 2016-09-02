@@ -3,7 +3,7 @@
   "description": "Azure Log Analytics HTTP DataCollector API wrapper",
   "authors": [ "ealsur" ],
   "dependencies": {
-
+    "Newtonsoft.Json":"9.0.1"
   },
   "packOptions": {
     "tags": [ "azure", "log", "analytics" ],
@@ -19,6 +19,7 @@
       }
     },
     "net461": { },
-    "net46": { }
+    "net46": { },
+    "net45": { }
   }
 }
