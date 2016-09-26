@@ -15,7 +15,7 @@ namespace HTTPDataCollectorAPI.Test
         [Fact]
         public async Task SendingValidPayload()
         {
-            var collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}", "{Your_Workspace_Key}");
+            ICollector collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}", "{Your_Workspace_Key}");
             await collector.Collect("TestLogType", "{\"TestAttribute\":\"TestValue\"}");
         }        
 
@@ -27,7 +27,7 @@ namespace HTTPDataCollectorAPI.Test
                 MyStringAttribute = "hello",
                 MyListAttribute = new List<string>(){"one","two"}
             };
-            var collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}", "{Your_Workspace_Key}");
+			ICollector collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}", "{Your_Workspace_Key}");
             await collector.Collect("TestLogType", anObject);
         }   
     }

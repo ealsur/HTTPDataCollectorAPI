@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/ealsur/HTTPDataCollectorAPI</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Azure Log Analytics HTTP Data Collector API wrapper</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>Interface optional parameters</releaseNotes>
     <copyright>Copyright 2016. Ealsur.</copyright>
     <tags>azure log analytics</tags>
   </metadata>
