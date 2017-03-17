@@ -25,34 +25,15 @@ namespace HTTPDataCollectorAPI
             _SharedKey = SharedKey;
         }
 
-
-        /// <summary>
-        /// SHA256 signature hash
-        /// </summary>
-        /// <returns></returns>
-        private string HashSignature(string method, int contentLength, string contentType, string date, string resource)
-        {
-            var stringtoHash = method + "\n" + contentLength + "\n" + contentType + "\nx-ms-date:" + date + "\n" + resource;
-            var encoding = new System.Text.ASCIIEncoding();
-            var bytesToHash = encoding.GetBytes(stringtoHash);
-            var keyBytes = Convert.FromBase64String(_SharedKey);
-            using (var sha256 = new HMACSHA256(keyBytes))
-            {
-                var calculatedHash = sha256.ComputeHash(bytesToHash);
-                var stringHash = Convert.ToBase64String(calculatedHash);
-                return "SharedKey " + _WorkspaceId + ":" + stringHash;
-            }
-        }
-
         /// <summary>
         /// Collect a JSON log to Azure Log Analytics
         /// </summary>
         /// <param name="LogType">Name of the Type of Log. Can be any name you want to appear on Azure Log Analytics.</param>
         /// <param name="ObjectToSerialize">Object to serialize and collect.</param>
         /// <param name="ApiVersion">Optional. Api Version.</param>
-        public async Task Collect(string LogType, object ObjectToSerialize, string ApiVersion="2016-04-01")
+        public async Task Collect(string LogType, object ObjectToSerialize, string ApiVersion="2016-04-01", string timeGeneratedPropertyName = null)
         {
-            await Collect(LogType, Newtonsoft.Json.JsonConvert.SerializeObject(ObjectToSerialize), ApiVersion);
+            await Collect(LogType, Newtonsoft.Json.JsonConvert.SerializeObject(ObjectToSerialize), ApiVersion, timeGeneratedPropertyName);
         }
         /// <summary>
         /// Collect a JSON log to Azure Log Analytics
@@ -60,7 +41,7 @@ namespace HTTPDataCollectorAPI
         /// <param name="LogType">Name of the Type of Log. Can be any name you want to appear on Azure Log Analytics.</param>
         /// <param name="JsonPayload">JSON string. Can be an array or single object.</param>
         /// <param name="ApiVersion">Optional. Api Version.</param>
-        public async Task Collect(string LogType, string JsonPayload, string ApiVersion="2016-04-01")
+        public async Task Collect(string LogType, string JsonPayload, string ApiVersion="2016-04-01", string timeGeneratedPropertyName = null)
         {
             string url = "https://" + _WorkspaceId + ".ods.opinsights.azure.com/api/logs?api-version=" + ApiVersion;
             var rfcDate = DateTime.Now.ToUniversalTime().ToString("r");
@@ -72,6 +53,10 @@ namespace HTTPDataCollectorAPI
             request.Headers["Log-Type"] = LogType;
             request.Headers["x-ms-date"] = rfcDate;
             request.Headers["Authorization"] = signature;
+            if (!string.IsNullOrEmpty(timeGeneratedPropertyName))
+            {
+                request.Headers["time-generated-field"] = timeGeneratedPropertyName;
+            }
             request.Proxy = null;
             var utf8Encoding = new UTF8Encoding();
             Byte[] content = utf8Encoding.GetBytes(JsonPayload);
@@ -91,6 +76,24 @@ namespace HTTPDataCollectorAPI
                         throw new Exception(reader.ReadToEnd());
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// SHA256 signature hash
+        /// </summary>
+        /// <returns></returns>
+        private string HashSignature(string method, int contentLength, string contentType, string date, string resource)
+        {
+            var stringtoHash = method + "\n" + contentLength + "\n" + contentType + "\nx-ms-date:" + date + "\n" + resource;
+            var encoding = new System.Text.ASCIIEncoding();
+            var bytesToHash = encoding.GetBytes(stringtoHash);
+            var keyBytes = Convert.FromBase64String(_SharedKey);
+            using (var sha256 = new HMACSHA256(keyBytes))
+            {
+                var calculatedHash = sha256.ComputeHash(bytesToHash);
+                var stringHash = Convert.ToBase64String(calculatedHash);
+                return "SharedKey " + _WorkspaceId + ":" + stringHash;
             }
         }
     }
