@@ -14,6 +14,7 @@ namespace HTTPDataCollectorAPI
     {
         private string _WorkspaceId;
         private string _SharedKey;
+		private byte[] _SharedKeyBytes;
         /// <summary>
         /// Wrapper for reporting custom JSON events to Azure Log Analytics
         /// </summary>
@@ -23,7 +24,8 @@ namespace HTTPDataCollectorAPI
         {
             _WorkspaceId = WorkspaceId;
             _SharedKey = SharedKey;
-        }
+			_SharedKeyBytes = Convert.FromBase64String(_SharedKey);
+		}
 
         /// <summary>
         /// Collect a JSON log to Azure Log Analytics
@@ -87,9 +89,8 @@ namespace HTTPDataCollectorAPI
         {
             var stringtoHash = method + "\n" + contentLength + "\n" + contentType + "\nx-ms-date:" + date + "\n" + resource;
             var encoding = new System.Text.ASCIIEncoding();
-            var bytesToHash = encoding.GetBytes(stringtoHash);
-            var keyBytes = Convert.FromBase64String(_SharedKey);
-            using (var sha256 = new HMACSHA256(keyBytes))
+            var bytesToHash = encoding.GetBytes(stringtoHash);            
+            using (var sha256 = new HMACSHA256(_SharedKeyBytes))
             {
                 var calculatedHash = sha256.ComputeHash(bytesToHash);
                 var stringHash = Convert.ToBase64String(calculatedHash);
