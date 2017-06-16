@@ -45,9 +45,12 @@ namespace HTTPDataCollectorAPI
         /// <param name="ApiVersion">Optional. Api Version.</param>
         public async Task Collect(string LogType, string JsonPayload, string ApiVersion="2016-04-01", string timeGeneratedPropertyName = null)
         {
+            var utf8Encoding = new UTF8Encoding();
+            Byte[] content = utf8Encoding.GetBytes(JsonPayload);
+
             string url = "https://" + _WorkspaceId + ".ods.opinsights.azure.com/api/logs?api-version=" + ApiVersion;
             var rfcDate = DateTime.Now.ToUniversalTime().ToString("r");
-            var signature = HashSignature("POST", JsonPayload.Length, "application/json", rfcDate, "/api/logs");
+            var signature = HashSignature("POST", content.Length, "application/json", rfcDate, "/api/logs");
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json";
@@ -60,8 +63,6 @@ namespace HTTPDataCollectorAPI
                 request.Headers["time-generated-field"] = timeGeneratedPropertyName;
             }
             request.Proxy = null;
-            var utf8Encoding = new UTF8Encoding();
-            Byte[] content = utf8Encoding.GetBytes(JsonPayload);
             using (Stream requestStream = await request.GetRequestStreamAsync())
             {
                 requestStream.Write(content, 0, content.Length);
