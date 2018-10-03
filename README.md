@@ -37,6 +37,12 @@ If you are using a Depedency Injection mechanism (or ASP.NET Core) you can use t
       services.AddSingleton<HTTPDataCollectorAPI.ICollector, HTTPDataCollectorAPI.Collector>();
     }
     
+## Does it work on Azure Gov clouds?
+
+Yes, just use the constructor overload to define the cloud service endpoint:
+
+    var collector = new  HTTPDataCollectorAPI.Collector("{Your_Workspace_Id}", "{Your_Workspace_Key}", "ods.opinsights.azure.us");
+    
 ## Issues
 
 Please feel free to [report any issues](https://github.com/ealsur/HTTPDataCollectorAPI/issues) you might encounter. Keep in mind that this library won't assure that your JSON payloads are being indexed, it will make sure that the HTTP Data Collection API [responds an Accept](https://azure.microsoft.com/en-us/documentation/articles/log-analytics-data-collector-api/#return-codes) but there is no way (right now) to know when has the payload been indexed completely. 
