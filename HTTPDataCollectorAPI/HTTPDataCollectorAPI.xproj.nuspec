@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Azure Log Analytics HTTP Data Collector API wrapper</description>
     <releaseNotes>Interface optional parameters</releaseNotes>
-    <copyright>Copyright 2017. Ealsur.</copyright>
+    <copyright>Copyright 2018. Ealsur.</copyright>
     <tags>azure log analytics</tags>
   </metadata>
 </package>

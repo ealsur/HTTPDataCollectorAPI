@@ -15,16 +15,19 @@ namespace HTTPDataCollectorAPI
         private string _WorkspaceId;
         private string _SharedKey;
 		private byte[] _SharedKeyBytes;
+        private string _ServiceNamespace;
         /// <summary>
         /// Wrapper for reporting custom JSON events to Azure Log Analytics
         /// </summary>
         /// <param name="WorkspaceId">Workspace Id obtained from your Microsoft Operations Management Suite account, Settings > Connected Sources.</param>
         /// <param name="SharedKey">Primary or Secondary Key obtained from your Microsoft Operations Management Suite account, Settings > Connected Sources.</param>
-        public Collector(string WorkspaceId, string SharedKey)
+        /// <param name="ServiceNamespace">Optional. Allows to change the service endpoint to use the library in different clouds.</param>
+        public Collector(string WorkspaceId, string SharedKey, string ServiceNamespace = "ods.opinsights.azure.com")
         {
             _WorkspaceId = WorkspaceId;
             _SharedKey = SharedKey;
 			_SharedKeyBytes = Convert.FromBase64String(_SharedKey);
+            _ServiceNamespace = ServiceNamespace;
 		}
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace HTTPDataCollectorAPI
             var utf8Encoding = new UTF8Encoding();
             Byte[] content = utf8Encoding.GetBytes(JsonPayload);
 
-            string url = "https://" + _WorkspaceId + ".ods.opinsights.azure.com/api/logs?api-version=" + ApiVersion;
+            string url = "https://" + _WorkspaceId + "."+ _ServiceNamespace + "/api/logs?api-version=" + ApiVersion;
             var rfcDate = DateTime.Now.ToUniversalTime().ToString("r");
             var signature = HashSignature("POST", content.Length, "application/json", rfcDate, "/api/logs");
 
